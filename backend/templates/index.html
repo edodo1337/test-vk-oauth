@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="section">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class="notification is-danger is-small is-light ">
+            <button class="delete"></button>
+            {{ message }}
+        </div>
+
+
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
+        {% if context['is_authenticated'] %}
+
+        <div class="columns">
+            <div class="column has-text-centered">
+                <h1 class="title has-text-dark">Некоторые из ваших друзей</h1><br>
+            </div>
+
+        </div>
+        <div class="row columns is-multiline">
+            {% for friend in context['friends'] %}
+            <div class="column is-4">
+                <div class="card large">
+                    <div class="card-image is-16by9">
+                        <figure class="image">
+                            <a href="https://vk.com/id{{friend.id}}">
+                                <img src="{{friend['photo_200']}}"
+                                     alt="Image">
+                            </a>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4 no-padding has-text-dark">{{friend['first_name']}}</p>
+                                <p>
+                                <p class="subtitle is-6 has-text-dark">{{friend['last_name']}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+    {% else %}
+    <h1 class="title has-text-dark">Тестовое задание</h1><br>
+    <h1 class="subtitle has-text-dark">Нажмите на кнопку</h1><br>
+
+
+    <button class="button is-info has-text-white is-large">
+        <a href="{{ url_for('auth.login') }}">VK
+            login</a>
+    </button>
+    {% endif %}
+
+</div>
+{% endblock %}

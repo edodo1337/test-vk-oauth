@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Тестовое задание</title>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css"/>
+</head>
+
+<body>
+
+<!-- START NAV -->
+<nav class="navbar is-primary" style="padding-bottom: 0;">
+    <div class="container">
+        <div class="navbar-brand">
+            {% if context['is_authenticated'] %}
+            <a href="https://vk.com/id{{context['id']}}">
+                <h1 class="title has-text-light">{{context['first_name']}} {{context['last_name']}}</h1>
+            </a>
+            {% endif %}
+            <span class="navbar-burger burger" data-target="navbarMenu"></span>
+        </div>
+        {% if context['is_authenticated'] %}
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item is-active" href="{{ url_for('auth.logout') }}">
+                    Logout
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</nav>
+<!-- END NAV -->
+
+
+<section class="hero is-light is-fullheight">
+    {% block content %}
+    {% endblock %}
+
+</section>
+</body>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+    $notification = $delete.parentNode;
+
+    $delete.addEventListener('click', () => {
+      $notification.parentNode.removeChild($notification);
+    });
+  });
+});
+
+
+
+</script>
+
+</html>
